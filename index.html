@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predicción Turismo Canarias 🇮🇨</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        canarias: {
+                            blue: '#0071bc',
+                            yellow: '#ffd700',
+                            white: '#ffffff'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body 
+    class="min-h-screen flex items-center justify-center p-4 bg-cover bg-center bg-no-repeat bg-fixed"
+    style="background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://media.istockphoto.com/id/1264675861/es/foto/aerial-view-with-puerto-de-la-cruz-tenerife.jpg?s=612x612&w=0&k=20&c=OHmKM2bpTTG_Z3q6JTYjnzkA6Q6flNiD7xqFyp59O0s=');">
+
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden transform transition duration-500 hover:scale-[1.01]">
+        
+        <div class="bg-canarias-blue p-6 text-center relative">
+            <h1 class="text-white text-2xl font-bold tracking-wide">
+                <i class="fa-solid fa-plane-arrival mr-2 text-canarias-yellow"></i>
+                Turismo Canarias
+            </h1>
+            <p class="text-blue-200 text-sm mt-1">Predicción de Impacto Económico (IA)</p>
+            <div class="absolute -bottom-6 left-0 w-full h-6 bg-white rounded-t-[50%]"></div>
+        </div>
+
+        <div class="p-8 pt-6 space-y-5">
+            
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Año</label>
+                    <input type="number" id="anio" value="2025" 
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition">
+                </div>
+                <div>
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Mes</label>
+                    <select id="mes" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white">
+                        <option value="1">Enero</option> <option value="2">Febrero</option>
+                        <option value="3">Marzo</option> <option value="4">Abril</option>
+                        <option value="5">Mayo</option> <option value="6">Junio</option>
+                        <option value="7">Julio</option> <option value="8">Agosto</option>
+                        <option value="9">Septiembre</option> <option value="10">Octubre</option>
+                        <option value="11">Noviembre</option> <option value="12">Diciembre</option>
+                    </select>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-gray-700 text-sm font-bold mb-2">
+                    <i class="fa-solid fa-earth-europe text-blue-500 mr-1"></i> País de Origen
+                </label>
+                <select id="pais" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white">
+                    <option value="Reino Unido">🇬🇧 Reino Unido</option>
+                    <option value="Alemania">🇩🇪 Alemania</option>
+                    <option value="España">🇪🇸 España</option>
+                    <option value="Países Bajos">🇳🇱 Países Bajos</option>
+                    <option value="Italia">🇮🇹 Italia</option>
+                    <option value="Francia">🇫🇷 Francia</option>
+                    <option value="Suecia">🇸🇪 Suecia</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block text-gray-700 text-sm font-bold mb-2 flex justify-between">
+                    <span><i class="fa-solid fa-moon text-indigo-500 mr-1"></i> Noches Totales (Macro)</span>
+                    <span class="text-xs text-gray-400 font-normal self-center">Escenario Mensual</span>
+                </label>
+                <div class="relative">
+                    <input type="number" id="noches" value="500000" step="1000" 
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none font-mono text-gray-600">
+                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-gray-400 text-sm">
+                        noches
+                    </div>
+                </div>
+                <p class="text-xs text-gray-400 mt-1 italic">Ej: 500.000 (aprox. 50k turistas x 10 días)</p>
+            </div>
+
+            <div>
+                <label class="block text-gray-700 text-sm font-bold mb-2">Tipo de Visitante</label>
+                <select id="tipo" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white">
+                    <option value="Turista">🏖️ Turista (Estándar)</option>
+                    <option value="Excursionista">🛳️ Excursionista (Crucero)</option>
+                    <option value="Transito">✈️ En Tránsito</option>
+                </select>
+            </div>
+
+            <button onclick="predecir()" id="btn-predecir"
+                    class="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-bold py-3 rounded-lg shadow-lg transform transition hover:-translate-y-1 hover:shadow-xl flex justify-center items-center gap-2">
+                <span>🔮 Calcular Impacto</span>
+            </button>
+            
+            <div id="resultado" class="hidden mt-6 bg-green-50 border border-green-200 rounded-xl p-4 text-center animate-pulse">
+                <p class="text-green-800 text-sm font-semibold uppercase tracking-wider">Impacto Económico Estimado</p>
+                <div class="text-3xl font-extrabold text-green-600 my-2" id="valor-precio">--- €</div>
+                <p class="text-xs text-green-700" id="detalle-texto">...</p>
+            </div>
+
+        </div>
+        
+        <div class="bg-gray-50 p-4 text-center border-t border-gray-100">
+            <p class="text-xs text-gray-400">Powered by FastAPI & Scikit-Learn • TFM 2025</p>
+        </div>
+    </div>
+
+    <script>
+        // 🚨 IMPORTANTE: PEGA AQUÍ TU URL DE RENDER 🚨
+        const API_URL = "https://api-turismo-canarias.onrender.com"; 
+
+        async function predecir() {
+            const btn = document.getElementById("btn-predecir");
+            const resDiv = document.getElementById("resultado");
+            
+            // Animación de carga
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Calculando...';
+            btn.disabled = true;
+            btn.classList.add("opacity-75", "cursor-not-allowed");
+            resDiv.classList.add("hidden");
+
+            const datos = {
+                anio: parseInt(document.getElementById("anio").value),
+                mes: parseInt(document.getElementById("mes").value),
+                pais: document.getElementById("pais").value,
+                noches: parseInt(document.getElementById("noches").value),
+                tipo: document.getElementById("tipo").value
+            };
+
+            try {
+                // Quitamos la barra final si se te olvidó quitarla al copiar la URL
+                const cleanUrl = API_URL.replace(/\/$/, ""); 
+
+                const response = await fetch(`${cleanUrl}/predict`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(datos)
+                });
+
+                const result = await response.json();
+                
+                if (result.error) {
+                    alert("Error del servidor: " + result.error);
+                } else {
+                    resDiv.classList.remove("hidden");
+                    resDiv.classList.remove("animate-pulse"); // Quitamos pulso, dejamos fijo
+                    
+                    // FORMATEO DE DINERO: 
+                    // El modelo da miles de euros (k€). Multiplicamos x1000 para tener euros reales.
+                    let valorReal = result.prediccion_m_euros * 1000;
+                    
+                    let dineroBonito = new Intl.NumberFormat('es-ES', { 
+                        style: 'currency', 
+                        currency: 'EUR',
+                        maximumFractionDigits: 0 
+                    }).format(valorReal);
+                    
+                    document.getElementById("valor-precio").innerText = dineroBonito;
+                    document.getElementById("detalle-texto").innerText = result.detalle;
+                }
+            } catch (error) {
+                console.error(error);
+                alert("❌ Error de conexión. Revisa:\n1. Que la URL sea correcta.\n2. Que Render esté 'Live'.\n3. Que hayas subido el main.py con CORS.");
+            }
+
+            // Restaurar botón
+            btn.innerHTML = '<span>🔮 Calcular Impacto</span>';
+            btn.disabled = false;
+            btn.classList.remove("opacity-75", "cursor-not-allowed");
+        }
+    </script>
+
+</body>
+</html>
